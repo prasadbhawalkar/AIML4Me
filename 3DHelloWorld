@@ -1,0 +1,36 @@
+<canvas id="myCanvas"></canvas>
+
+<script type="module">
+  import * as THREE from 'https://cdn.skypack.dev/three@0.150.0';
+
+  // 2. Setup the Scene
+  const scene = new THREE.Scene();
+  const canvas = document.querySelector('#myCanvas');
+
+  // 3. Setup the Camera (Field of View, Aspect Ratio, Near/Far clipping)
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 3;
+
+  // 4. Create an Object (Geometry + Material = Mesh)
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  // 5. Setup the Renderer
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // 6. The Animation Loop (Draws the scene 60 times per second)
+  function animate() {
+    requestAnimationFrame(animate);
+    
+    // Rotate the cube a little bit every frame
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+</script>
